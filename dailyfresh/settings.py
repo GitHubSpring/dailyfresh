@@ -15,7 +15,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '#6$$nfe!+3e&y$b4=dc*h)!(j8oaix(u@5_)&bt18o@!$2hezr'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -71,7 +69,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dailyfresh.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -86,7 +83,6 @@ DATABASES = {
     }
 }
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -100,7 +96,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -108,8 +103,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-# xkaxinxin802377  注册邮箱
+"""
+# 163 SMTP 配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
 EMAIL_PORT = 25
@@ -119,3 +114,18 @@ EMAIL_HOST_USER = 'xkaxinxin@163.com'
 EMAIL_HOST_PASSWORD = 'xkaxinxin802377'
 #收件人看到的发件人
 EMAIL_FROM = 'dailyfresh<xkaxinxin@163.com>'
+"""
+
+# qq IMAP/SMTP 配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25  # 或者 465/587是设置了 SSL 加密方式
+# 发送邮件的邮箱
+EMAIL_HOST_USER = '2629488746@qq.com'
+# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'jkrnzhebivmoecja'
+EMAIL_USE_TLS = True  # 这里必须是 True，否则发送不成功
+# 收件人看到的发件人, 必须是一直且有效的
+EMAIL_FROM = 'dailyfresh<2629488746@qq.com>'
+
+# """

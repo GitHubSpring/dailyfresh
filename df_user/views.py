@@ -17,11 +17,13 @@ def register_handler(request):
     username = request.POST.get('user_name')
     pwd = request.POST.get('pwd')
     email = request.POST.get('email')
-    # 2. 将数据添加到数据库
-    Passport.objects.add_one_passport(username=username, password=pwd, email=email)
     # 3. 发送邮件
     html_message = '<h1>欢迎成为天天生鲜注册会员</h1>'
-    send_mail('欢迎信息', '', settings.EMAIL_FROM, [email], html_message=html_message)
+    send_status = send_mail('欢迎信息', '欢迎成为天天生鲜注册会员', settings.EMAIL_FROM, [email], html_message=html_message)
+    if send_status:
+        # 2. 将数据添加到数据库
+        Passport.objects.add_one_passport(username=username, password=pwd, email=email)
+
     # 4. 跳转到登录界面
     return redirect('/user/login/')
 
