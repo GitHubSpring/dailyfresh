@@ -1,15 +1,14 @@
 from django.db import models
 from db.base_model import BaseModel
-# from django.contrib.auth.hashers import PBKDF2SHA1PasswordHasher
-from hashlib import sha1
-from django.db.models import Q
+from utils.get_hash import get_hash  # 加密
 
 
 class PassportManager(models.Manager):
     """用户账户管理器类"""
+
     def add_one_passport(self, username, password, email):
         """添加一个用户注册信息"""
-        obj = self.model(username=username, password=password, email=email)
+        obj = self.model(username=username, password=get_hash(password), email=email)
         obj.save()
         return obj
 
@@ -23,8 +22,7 @@ class PassportManager(models.Manager):
 
     def is_correct(self, username, password):
         """判断用户名和密码是否正确"""
-        obj = self.model.objects.filter(Q(username=username) & Q(password=password))
-        if len(obj) == 0:
+        if self.model.objects.filter(username=username, password=get_hash(password)).exists():
             return 0  # 错误
 
         return 1  # 正确
@@ -40,4 +38,3 @@ class Passport(BaseModel):
 
     class Meta:
         db_table = 's_user_account'
-

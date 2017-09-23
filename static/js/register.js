@@ -9,7 +9,9 @@ $(function(){
 
 	$('#user_name').blur(function() {
 		check_user_name();
-		check_user_exist();  // 验证用户是否已存在
+		if (error_name == false){
+            check_user_exist(true);  // 验证用户是否已存在 异步
+        }
 	});
 
 	$('#pwd').blur(function() {
@@ -54,20 +56,24 @@ $(function(){
 		}
 	}
 
-	function check_user_exist(){
+	function check_user_exist(async){
 		// 发送 ajax 请求判断用户名是否已经注册
-		$.get('/user/check_user_exist/'+ $('#user_name').val() +'/', function (data) {
-			if(data.res == 1){
+		$.ajax({
+			'url': '/user/check_user_exist/'+ $('#user_name').val() +'/',
+			'async': async,
+		}).success(function (data) {
+			// alert(2);
+			if (data.res == 1){
 				// 已注册
-				$('#user_name').next().html('该用户名已注册');
-				$('#user_name').next().show();
+				$('#user_name').next().html('该用户名已注册').show();
 				error_name = true;
-			}else{
+			}else {
 				// 未注册
 				$('#user_name').next().hide();
 				error_name = false;
 			}
-        })
+
+        });
 	}
 
 	function check_pwd(){
@@ -122,10 +128,12 @@ $(function(){
 	}
 
 
-	$('#reg_form2 form').submit(function() {
-		//　alert(1)
+	$('#reg_form2').submit(function() {
+		// alert(1)
 		check_user_name();
-		// 校验用户名是否存在
+		// 校验用户名是否存在 异步
+		check_user_exist(false);
+		// alert(3);
 		check_pwd();
 		check_cpwd();
 		check_email();

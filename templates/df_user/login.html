@@ -6,6 +6,22 @@
 	<title>天天生鲜-登录</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script >
+        $(function () {
+            $('#login_btn').click(function () {
+                csrf = $('input[name="csrfmiddlewaretoken"]');
+                param = {'csrfmiddlewaretoken': csrf,
+                    'username': $('#username').val(),
+                    'password': $('#pwd').val(),
+                    'protocol':$('#check_protocol').is('checked')};
+                alert($('#check_protocol').is('checked'));
+                $.post('/user/login_check/', param, function (data) {
+                    // {'res':结果} 1: 
+                })
+            });
+
+        })
+    </script>
 </head>
 <body>
 	<div class="login_top clearfix">
@@ -22,19 +38,19 @@
 					<a href="#">立即注册</a>
 				</div>
 				<div class="form_input">
-					<form method="post" action="/user/login_check/">
+{#					<form method="post" action="/user/login_check/">#}
                         {% csrf_token %}
-						<input type="text" name="username" class="name_input" placeholder="请输入用户名">
+						<input type="text" id="username" class="name_input" placeholder="请输入用户名">
 						<div class="user_error">输入错误</div>
-						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码">
+						<input type="password" id="pwd" class="pass_input" placeholder="请输入密码">
 						<div class="pwd_error">输入错误</div>
 						<div class="more_input clearfix">
-							<input type="checkbox" name="">
+							<input type="checkbox" id="check_protocol">
 							<label>记住用户名</label>
 							<a href="#">忘记密码</a>
 						</div>
-						<input type="submit" name="" value="登录" class="input_submit">
-					</form>
+						<input type="button" id="login_btn" value="登录" class="input_submit">
+{#					</form>#}
 				</div>
 			</div>
 		</div>
