@@ -59,8 +59,8 @@ $(function(){
 	function check_user_exist(async){
 		// 发送 ajax 请求判断用户名是否已经注册
 		$.ajax({
-			'url': '/user/check_user_exist/'+ $('#user_name').val() +'/',
-			'async': async,
+			'url': '/user/check_user_exist/?username='+$('#user_name').val(),
+			'async': async
 		}).success(function (data) {
 			// alert(2);
 			if (data.res == 1){

@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djcelery',  # 配置 django-celery
     'df_user',  # 用户操作
 )
 
@@ -103,7 +104,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-"""
+# """
 # 163 SMTP 配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com'
@@ -114,8 +115,8 @@ EMAIL_HOST_USER = 'xkaxinxin@163.com'
 EMAIL_HOST_PASSWORD = 'xkaxinxin802377'
 #收件人看到的发件人
 EMAIL_FROM = 'dailyfresh<xkaxinxin@163.com>'
+# """
 """
-
 # qq IMAP/SMTP 配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.qq.com'
@@ -127,5 +128,9 @@ EMAIL_HOST_PASSWORD = 'jkrnzhebivmoecja'
 EMAIL_USE_TLS = True  # 这里必须是 True，否则发送不成功
 # 收件人看到的发件人, 必须是一直且有效的
 EMAIL_FROM = 'dailyfresh<2629488746@qq.com>'
+"""
 
-# """
+# 配置 django-celery
+import djcelery
+djcelery.setup_loader()  # 去每一个注册的应用下, 找一个叫 task.py 的文件, 到文件中去加载celery 任务函数
+BROKER_URL = 'redis://127.0.0.1:6379/2'  # 指定哪个 redis 数据库哪个表来提供队列,用来存放 celery 任务函数

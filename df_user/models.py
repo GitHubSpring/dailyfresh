@@ -14,18 +14,27 @@ class PassportManager(models.Manager):
 
     def is_exist_by_username(self, username):
         """通过用户名查看用户是否已注册"""
-        obj = self.model.objects.filter(username=username)
-        if len(obj) == 0:
-            return 0  # 不存在
-
-        return 1  # 存在
+        try:
+            obj = self.model.objects.get(username=username)
+        except self.model.DoesNotExist:
+            obj = None   # 未注册
+        return obj
 
     def is_correct(self, username, password):
         """判断用户名和密码是否正确"""
+        """
         if self.model.objects.filter(username=username, password=get_hash(password)).exists():
-            return 0  # 错误
+            return 1  # 正确
 
-        return 1  # 正确
+        return 0  # 错误
+        """
+        try:
+            obj = self.get(username=username, password=get_hash(password))
+        except self.model.DoesNotExist:
+            obj = None
+
+        return obj
+
 
 
 class Passport(BaseModel):
