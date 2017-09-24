@@ -37,7 +37,7 @@ $(function () {
     });
 
     $('#login_btn').click(function () {
-        alert(input_remember.is(':checked')); // true/false
+        // alert(input_remember.is(':checked')); // true/false
         if (error_username == false && error_password == false) {
             csrf = $('input[name="csrfmiddlewaretoken"]').val();
             param = {
@@ -46,11 +46,14 @@ $(function () {
                 'password': password,
                 'remember': input_remember.is(':checked')
             };
+            console.log(param);
             $.post('/user/login/', param, function (data) {
                 // {res:结果} 1:正确 0:错误
+                alert(data.res, data.next_path);
                 if (data.res == 1) {
                     // 跳转首页
-                    location.href = '/'
+                    // location.href = '/'
+                    location.href = data.next_path;
                 } else {
                     input_uname.next().html('用户名或密码错误').show();
                 }

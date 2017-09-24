@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from df_user.models import Passport
+from df_user.models import Passport, Address
 from django.http import JsonResponse
 
 from df_user.tasks import send_register_success_email  # 使用 celery 中的 task 任务函数
@@ -55,8 +55,14 @@ def login(request):
     # 2. 查询数据库是否存在并正确
     obj = Passport.objects.get_one_passport(username=username, password=pwd)
     if obj:
+        # 判断是否有记录上一次访问的地址
+        if request.session.has_key('pre_url_path'):
+            next_path = request.session['pre_url_path']
+        else:
+            next_path = '/'  # 默认跳转到首页
+        # 将结果和地址返回
+        jres = JsonResponse({'res': 1, 'next_path': next_path})
         # 存在 判断是否记住用户名
-        jres = JsonResponse({'res': 1})
         if request.POST.get('remember') == 'true':
             jres.set_cookie('username', username, max_age=14 * 86400)
 
@@ -79,7 +85,9 @@ def logout(request):
 @login_require
 def user(request):
     """用户中心-用户信息页"""
-    return render(request, 'df_user/user_center_info.html', {'page': 'info'})
+    # 获取用户的默认收货信息
+    obj = Address.objects.get_one_address(request.session['passport_id'])
+    return render(request, 'df_user/user_center_info.html', {'page': 'info', 'address': obj})
 
 
 @login_require
@@ -91,4 +99,19 @@ def order(request):
 @login_require
 def address(request):
     """用户中心-地址页"""
-    return render(request, 'df_user/user_center_site.html', {'page': 'address'})
+    if request.method == 'GET':
+        # 查看是否有默认地址
+        obj = Address.objects.get_one_address(request.session['passport_id'])
+        return render(request, 'df_user/user_center_site.html', {'page': 'address', 'address': obj})
+
+    # post 添加收货地址
+    recipient_name = request.POST.get('recipient_name')
+    recipient_addr = request.POST.get('recipient_addr')
+    zip_code = request.POST.get('zip_code')
+    recipient_phone = request.POST.get('recipient_phone')
+    Address.objects.add_one_address(recipient_name=recipient_name, recipient_addr=recipient_addr,
+                                    recipient_phone=recipient_phone,
+                                    passport_id=request.session['passport_id'],
+                                    zip_code=zip_code)
+    # 刷新, 即 get 访问地址页
+    return redirect('/user/address/')
