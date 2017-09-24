@@ -7,5 +7,8 @@ urlpatterns = [
 
     url(r'^login/$', views.login),  # 登录界面(get)/登录处理(post)
     url(r'^logout/$', views.logout),  # 退出登录
-    url(r'^', views.user),  # 用户中心-用户信息页
+
+    url(r'^$', views.user),  # 用户中心-用户信息页
+    url(r'^order/$', views.order),  # 用户中心-订单页
+    url(r'^address/$', views.address),  # 用户中心-地址页
 ]

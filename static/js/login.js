@@ -37,8 +37,7 @@ $(function () {
     });
 
     $('#login_btn').click(function () {
-        // alert(input_remember.is(':checked'));  # true/false
-
+        alert(input_remember.is(':checked')); // true/false
         if (error_username == false && error_password == false) {
             csrf = $('input[name="csrfmiddlewaretoken"]').val();
             param = {

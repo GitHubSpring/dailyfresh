@@ -6,6 +6,7 @@ from df_user.tasks import send_register_success_email  # 使用 celery 中的 ta
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from utils.decorators import login_require  # 登录装饰器
 
+
 # /user/register
 @require_http_methods(['GET', 'POST'])
 def register(request):
@@ -30,7 +31,7 @@ def register(request):
 @require_GET
 def check_user_exist(request):
     """验证用户名是否已经存在"""
-    obj = Passport.objects.is_exist_by_username(request.GET.get('username'))
+    obj = Passport.objects.get_one_passport(username=request.GET.get('username'))
     if obj:
         return JsonResponse({'res': 1})
     return JsonResponse({'res': 0})
@@ -41,20 +42,23 @@ def login(request):
     """登录界面/登录处理"""
     if request.method == 'GET':
         # 登录界面
-        return render(request, 'df_user/login.html')
+        username = ''
+        if 'username' in request.COOKIES:
+            username = request.COOKIES.get('username')
+
+        return render(request, 'df_user/login.html', {'username': username})
     # 登录处理
     # 1. 获取信息
     username = request.POST.get('username')
     pwd = request.POST.get('password')
 
     # 2. 查询数据库是否存在并正确
-    obj = Passport.objects.is_correct(username=username, password=pwd)
-    print(username, pwd,obj)
+    obj = Passport.objects.get_one_passport(username=username, password=pwd)
     if obj:
         # 存在 判断是否记住用户名
-        if request.POST.get('remember'):
-            jres = JsonResponse({'res': 1})
-            jres.set_cookie('username', username)
+        jres = JsonResponse({'res': 1})
+        if request.POST.get('remember') == 'true':
+            jres.set_cookie('username', username, max_age=14 * 86400)
 
         request.session['islogin'] = True
         request.session['username'] = username
@@ -75,15 +79,16 @@ def logout(request):
 @login_require
 def user(request):
     """用户中心-用户信息页"""
-    return render(request, 'df_user/user_center_info.html')
+    return render(request, 'df_user/user_center_info.html', {'page': 'info'})
 
 
+@login_require
 def order(request):
     """用户中心-订单页"""
-    return render(request, 'df_user/user_center_order.html')
+    return render(request, 'df_user/user_center_order.html', {'page': 'order'})
 
 
-def site(request):
+@login_require
+def address(request):
     """用户中心-地址页"""
-    return render(request, 'df_user/user_center_site.html')
-
+    return render(request, 'df_user/user_center_site.html', {'page': 'address'})
