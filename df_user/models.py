@@ -7,9 +7,9 @@ from db.base_manager import BaseManager  # 导入模型管理器类基类
 class PassportManager(BaseManager):
     """用户账户管理器类"""
 
-    def add_one_passport(self, **kwargs):
+    def add_one_passport(self, username, password, email):
         """添加一个用户注册信息"""
-        obj = self.add_one_passport(**kwargs)
+        obj = self.add_one_passport(username=username, password=get_hash(password), email=email)
         return obj
 
     def get_one_passport(self, username, password=None):

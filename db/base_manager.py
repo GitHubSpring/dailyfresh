@@ -33,6 +33,7 @@ class BaseManager(models.Manager):
         attr_tuple = self.model._meta.get_fields()
         attr_list = []
         for attr in attr_tuple:
+            # 将外键自动创建的 xxx_id 属性添加进来
             if isinstance(attr, models.ForeignKey):
                 attr_list.append('%s_id' % attr.name)
             attr_list.append(attr.name)
