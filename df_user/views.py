@@ -55,7 +55,7 @@ def login(request):
     # 2. 查询数据库是否存在并正确
     obj = Passport.objects.get_one_passport(username=username, password=pwd)
     if obj:
-        next_path = '/'  # 默认跳转到首页
+        next_path = '/goods/'  # 默认跳转到首页
         # 判断是否有记录上一次访问的地址
         if request.session.has_key('pre_url_path'):
             next_path = request.session['pre_url_path']
@@ -81,7 +81,7 @@ def logout(request):
     """登出"""
     request.session.flush()
     # 重定向到首页
-    return redirect('/')
+    return redirect('/goods/')
 
 
 @login_require
