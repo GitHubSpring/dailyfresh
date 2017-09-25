@@ -22,8 +22,8 @@ class BaseManager(models.Manager):
     def get_one_object(self, **kwargs):
         """查询一条记录"""
         try:
-            obj = self.get(*kwargs)
-        except self.model.DoesNotExit:
+            obj = self.get(**kwargs)
+        except self.model.DoesNotExist:
             obj = None
 
         return obj

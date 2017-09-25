@@ -55,11 +55,10 @@ def login(request):
     # 2. 查询数据库是否存在并正确
     obj = Passport.objects.get_one_passport(username=username, password=pwd)
     if obj:
+        next_path = '/'  # 默认跳转到首页
         # 判断是否有记录上一次访问的地址
         if request.session.has_key('pre_url_path'):
             next_path = request.session['pre_url_path']
-        else:
-            next_path = '/'  # 默认跳转到首页
         # 将结果和地址返回
         jres = JsonResponse({'res': 1, 'next_path': next_path})
         # 存在 判断是否记住用户名
@@ -69,6 +68,9 @@ def login(request):
         request.session['islogin'] = True
         request.session['username'] = username
         request.session['passport_id'] = obj.id
+
+        print(next_path)
+
         return jres
 
     # 用户名或密码错误
@@ -96,6 +98,7 @@ def order(request):
     return render(request, 'df_user/user_center_order.html', {'page': 'order'})
 
 
+@require_http_methods(['POST', 'GET'])
 @login_require
 def address(request):
     """用户中心-地址页"""

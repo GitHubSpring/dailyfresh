@@ -49,7 +49,6 @@ $(function () {
             console.log(param);
             $.post('/user/login/', param, function (data) {
                 // {res:结果} 1:正确 0:错误
-                alert(data.res, data.next_path);
                 if (data.res == 1) {
                     // 跳转首页
                     // location.href = '/'

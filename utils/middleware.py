@@ -2,7 +2,7 @@
 class UrlPathRrecordMiddleware(object):
     """记录上一次访问的地址中间件"""
     # 以下地址和 ajax 请求地址不需要记录
-    exclude_path = ['/user/login/', '/user/logout/', 'user/register/']
+    exclude_path = ['/user/login/', '/user/logout/', '/user/register/']
 
     def process_view(self, request, view_func, *view_args, **view_kwargs):
         if request.path not in UrlPathRrecordMiddleware.exclude_path and not request.is_ajax():

@@ -9,8 +9,7 @@ class PassportManager(BaseManager):
 
     def add_one_passport(self, username, password, email):
         """添加一个用户注册信息"""
-        obj = self.add_one_passport(username=username, password=get_hash(password), email=email)
-        return obj
+        self.add_one_object(username=username, password=get_hash(password), email=email)
 
     def get_one_passport(self, username, password=None):
         """判断用户是否存在/判断用户名和密码是否正确"""

@@ -9,7 +9,9 @@ def get_hash(string, salt=None):
     if salt:
         # 给字符串加佐料
         string += salt
-
+    """
     sha = sha1()
     sha.update(string.encode('utf-8'))
     return sha.hexdigest()
+    """
+    return sha1(string.encode('utf-8')).hexdigest()
