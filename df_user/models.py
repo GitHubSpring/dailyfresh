@@ -1,26 +1,23 @@
 from django.db import models
-from db.base_model import BaseModel
+from db.base_model import BaseModel  # 导入模型类基类
 from utils.get_hash import get_hash  # 加密
+from db.base_manager import BaseManager  # 导入模型管理器类基类
 
 
-class PassportManager(models.Manager):
+class PassportManager(BaseManager):
     """用户账户管理器类"""
 
-    def add_one_passport(self, username, password, email):
+    def add_one_passport(self, **kwargs):
         """添加一个用户注册信息"""
-        obj = self.model(username=username, password=get_hash(password), email=email)
-        obj.save()
+        obj = self.add_one_passport(**kwargs)
         return obj
 
     def get_one_passport(self, username, password=None):
         """判断用户是否存在/判断用户名和密码是否正确"""
-        try:
-            if password:
-                obj = self.get(username=username, password=get_hash(password))
-            else:
-                obj = self.get(username=username)
-        except self.model.DoesNotExist:
-            obj = None
+        if password:
+            obj = self.get_one_object(username=username, password=get_hash(password))
+        else:
+            obj = self.get_one_object(username=username)
         return obj
 
 
@@ -36,26 +33,21 @@ class Passport(BaseModel):
         db_table = 's_user_account'
 
 
-class AddressManager(models.Manager):
+class AddressManager(BaseManager):
     """地址管理器类"""
 
     def get_one_address(self, passport_id):
         """获取账户默认收货地址"""
-        try:
-            obj = self.get(passport_id=passport_id, is_default=True)
-        except self.model.DoesNotExist:
-            obj = None
-        return obj
+        self.get_one_object(passport_id=passport_id, is_default=True)
 
     def add_one_address(self, recipient_name, recipient_addr, recipient_phone, zip_code, passport_id):
         """给账户添加收货地址"""
         is_default = False
-        if self.get_one_address(passport_id) is None:
+        if self.get_one_object(passport_id=passport_id) is None:
             # 当前没有收货地址, 第一次添加的收获地址默认为默认收货地址
             is_default = True
-        obj = self.model(recipient_name=recipient_name, recipient_addr=recipient_addr, recipient_phone=recipient_phone,
-                         zip_code=zip_code, passport_id=passport_id, is_default=is_default)
-        obj.save()
+        self.add_one_object(recipient_name=recipient_name, recipient_addr=recipient_addr, recipient_phone=recipient_phone,
+                            zip_code=zip_code, passport_id=passport_id, is_default=is_default)
 
 
 class Address(BaseModel):
