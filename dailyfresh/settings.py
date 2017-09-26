@@ -35,8 +35,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djcelery',  # 配置 django-celery
-    'tinymce',  # 富文本编辑器
+    'djcelery',  # 第三方发送邮件, 配置 django-celery
+    'tinymce',  # 第三方富文本编辑器
+    'haystack',  # 第三方全文搜索框架
     'df_user',  # 用户操作
     'df_goods',  # 商品操作
 
@@ -135,5 +136,16 @@ TINYMCE_DEFAULT_CONFIG = {
     'height': 400,  # 编辑窗口的大小
 }
 
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        #使用whoosh引擎
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        #索引文件路径, 创建索引时自动创建该文件
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
 
+#当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SEARCH_RESULTS_PRE_PAGE = 6  # 配置搜索结果也每页显示6条数据
 

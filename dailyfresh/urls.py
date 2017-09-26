@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^search/', include('haystack.urls')),  # 配置全文搜索路径, 将搜索交给 haystack 中的 urls 处理
     url(r'^user/', include('df_user.urls')),
     url(r'^', include('df_goods.urls')),
 ]

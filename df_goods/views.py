@@ -86,7 +86,7 @@ def goods_list(request, goods_type_id, pindex):
     goods = Goods.objects.get_goods_by_type(goods_type_id=goods_type_id, sort=sort)
 
     # 对查询结果进行分页
-    paginator = Paginator(goods, 1)
+    paginator = Paginator(goods, 5)
     pindex = int(pindex)
     goods = paginator.page(pindex)  # 获取第 pindex 页的内容
     nums_pages = paginator.num_pages  # 获取分页后的总页数
@@ -117,3 +117,5 @@ def goods_list(request, goods_type_id, pindex):
     }
     return render(request, 'df_goods/list.html', context)
 
+
+# def search

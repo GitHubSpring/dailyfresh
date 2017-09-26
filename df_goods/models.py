@@ -30,7 +30,7 @@ class GoodsManager(BaseManager):
         """
         order_by = '-pk'  # 默认
         if sort == 'price':
-            order_by = 'price'
+            order_by = 'goods_price'
         elif sort == 'new':
             order_by = '-create_time'
         elif sort == 'hot':
