@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7033def1-e67c-4ba3-a6e7-6eb6be524df2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/df_goods/search_indexes.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/search/indexes/df_goods/goods_text.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/search/search.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/df_goods/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/df_goods/migrations/0002_image.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/df_user/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/df_user/migrations/0002_address.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/static/images/goods_detail.jpg" afterPath="$PROJECT_DIR$/static/goods/goods_detail.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dailyfresh/settings.py" afterPath="$PROJECT_DIR$/dailyfresh/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dailyfresh/urls.py" afterPath="$PROJECT_DIR$/dailyfresh/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/df_goods/models.py" afterPath="$PROJECT_DIR$/df_goods/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/df_goods/views.py" afterPath="$PROJECT_DIR$/df_goods/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base.html" afterPath="$PROJECT_DIR$/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base_detail_list.html" afterPath="$PROJECT_DIR$/templates/base_detail_list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_goods/detail.html" afterPath="$PROJECT_DIR$/templates/df_goods/detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_goods/index.html" afterPath="$PROJECT_DIR$/templates/df_goods/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_goods/list.html" afterPath="$PROJECT_DIR$/templates/df_goods/list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_user/login.html" afterPath="$PROJECT_DIR$/templates/df_user/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_user/register.html" afterPath="$PROJECT_DIR$/templates/df_user/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_user/user_center_order.html" afterPath="$PROJECT_DIR$/templates/df_user/user_center_order.html" />
-    </list>
+    <list default="true" id="7033def1-e67c-4ba3-a6e7-6eb6be524df2" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +19,7 @@
         <entry file="file://$PROJECT_DIR$/dailyfresh/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="594">
-              <caret line="150" column="0" lean-forward="true" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
+              <caret line="150" column="0" lean-forward="false" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -51,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="193">
-              <caret line="55" column="82" lean-forward="true" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
+              <caret line="55" column="82" lean-forward="false" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
               <folding>
                 <element signature="n#block#1;n#!!top" expanded="false" />
               </folding>
@@ -990,7 +968,7 @@
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
-          <caret line="55" column="82" lean-forward="true" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
+          <caret line="55" column="82" lean-forward="false" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
           <folding>
             <element signature="n#block#1;n#!!top" expanded="false" />
           </folding>
@@ -1000,7 +978,7 @@
     <entry file="file://$PROJECT_DIR$/dailyfresh/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
-          <caret line="150" column="0" lean-forward="true" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
+          <caret line="150" column="0" lean-forward="false" selection-start-line="150" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
           <folding />
         </state>
       </provider>
