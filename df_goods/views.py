@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from df_goods.models import Goods
 from df_goods.enums import *  # 导入枚举
 from django.core.paginator import Paginator  # 导入分页类
+from utils.decorators import login_require  # 导入登录装饰器
 
 
 def home_list_page(request):
@@ -118,4 +119,10 @@ def goods_list(request, goods_type_id, pindex):
     return render(request, 'df_goods/list.html', context)
 
 
-# def search
+# /cart/add/
+@login_require
+def cart_add(request):
+    """添加商品到购物车"""
+    return JsonResponse({'res': 1})
+
+
