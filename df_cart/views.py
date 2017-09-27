@@ -17,3 +17,14 @@ def cart_add(request):
     # 添加失败
     return JsonResponse({'res': 0})
 
+
+def cart_count(request):
+    """获取购物车中商品总数"""
+    total_count = Cart.objects.get_total_cart_info(passport_id=request.session.get('passport_id'))
+    return JsonResponse({'res': total_count})
+
+
+@login_require
+def cart_show(request):
+    """购物车页"""
+    pass

@@ -34,6 +34,14 @@ class CartManager(BaseManager):
             self.add_one_object(passport_id=passport_id, goods_id=goods_id, goods_count=goods_count)
             return True
 
+    def get_total_cart_info(self, passport_id):
+        """获取商品总数"""
+        total_goods = self.filter(passport_id=passport_id)
+        total_count = 0
+        for goods in total_goods:
+            total_count += goods.goods_count
+        return total_count
+
 
 class Cart(BaseModel):
     """购物车模型类"""

@@ -3,8 +3,8 @@
 {% load staticfiles %}
 {% block topfiles %}
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-    <script>
-        $(function () {
+    <script src="{% static 'js/goods_detail.js' %}">
+        {% comment %}$(function () {
             var num_show = $('.num_show');
 
             $('.add').click(function () {
@@ -78,7 +78,7 @@
                     alert('请先登录');
                 {% endif %}
             })
-        })
+        }){% endcomment %}
     </script>
 {% endblock topfiles %}
 {% block main_content %}
@@ -154,6 +154,3 @@
     <div class="add_jump"></div>
 {% endblock bottom %}
 
-{% block bottomfiles %}
-
-{% endblock bottomfiles %}
