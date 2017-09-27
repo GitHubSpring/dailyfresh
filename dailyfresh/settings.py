@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'haystack',  # 第三方全文搜索框架
     'df_user',  # 用户操作
     'df_goods',  # 商品操作
+    'df_cart',  # 购物车操作
 
 )
 

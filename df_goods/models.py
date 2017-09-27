@@ -7,6 +7,7 @@ from df_goods.enums import *  # 导入枚举
 
 class GoodsLogicManager(BaseManager):
     """商品管理器逻辑类"""
+
     def get_goods_by_id(self, goods_id):
         """根据商品 id 查询商品信息, 包含商品详情图片"""
         goods = self.get_one_object(id=goods_id)
@@ -20,6 +21,7 @@ class GoodsLogicManager(BaseManager):
 
 class GoodsManager(BaseManager):
     """商品管理器类"""
+
     def get_goods_by_type(self, goods_type_id, limit=None, sort='default'):
         """
         根据商品类型id 查询商品信息,返回限定长度,并排序
@@ -37,7 +39,7 @@ class GoodsManager(BaseManager):
             order_by = '-goods_sales'
 
         goods = self.get_object_list(filters={'goods_type_id': goods_type_id},
-                                     order_by=(order_by, ))
+                                     order_by=(order_by,))
         if limit:
             # 对查询结果集进行切片
             goods = goods[:limit]
@@ -102,6 +104,7 @@ class Goods(BaseModel):
 
 class ImageManager(BaseManager):
     """商品图片详情管理器类"""
+
     def get_image_by_goods_id(self, goods_id):
         """根据商品 id 查询详情图片"""
         images = self.get_object_list(filters={'goods_id': goods_id})
@@ -121,3 +124,4 @@ class Image(BaseModel):
 
     class Meta:
         db_table = 's_goods_image'
+

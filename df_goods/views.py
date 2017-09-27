@@ -4,19 +4,19 @@ from django.http import JsonResponse
 from df_goods.models import Goods
 from df_goods.enums import *  # 导入枚举
 from django.core.paginator import Paginator  # 导入分页类
-from utils.decorators import login_require  # 导入登录装饰器
 
 
 def home_list_page(request):
     """首页"""
     # 查询商品
     """
+    key = ['fruits', 'seafood', 'meat', 'eggs', 'vegetables', 'frozen']
     context = {}
     for good_type in GOOD_TYPE:
         goods = Goods.objects.get_goods_by_type(goods_type_id=good_type, limit=4)
         goods_new = Goods.objects.get_goods_by_type(goods_type_id=good_type, limit=3, sort='new')
         t = (goods, goods_new)
-        context[good_type] = t
+        context[key[good_type-1]] = t
 
     print(context)
     """
@@ -117,12 +117,3 @@ def goods_list(request, goods_type_id, pindex):
         'sort': sort
     }
     return render(request, 'df_goods/list.html', context)
-
-
-# /cart/add/
-@login_require
-def cart_add(request):
-    """添加商品到购物车"""
-    return JsonResponse({'res': 1})
-
-
