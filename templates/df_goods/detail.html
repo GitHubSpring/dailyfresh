@@ -3,8 +3,9 @@
 {% load staticfiles %}
 {% block topfiles %}
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
-    <script src="{% static 'js/goods_detail.js' %}">
-        {% comment %}$(function () {
+{#    <script src="{% static 'js/goods_detail.js' %}">#}
+    <script>
+        $(function () {
             var num_show = $('.num_show');
 
             $('.add').click(function () {
@@ -40,7 +41,6 @@
                 update_total_price();
             });
 
-
             $('#add_cart').click(function () {
                 // 判断用户是否登录
                 {% if request.session.islogin %}
@@ -51,7 +51,7 @@
                     var $to_y = $('#show_count').offset().left;
 
                     $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
-                    // 已登录, 发送 ajax的get 请求保存到数据库, 参数:商品 id 和商品数目
+                    // 已登录, 发送 ajax的get 请求保存到数据库, 参数:商品 id 和商品数目; 添加进历史记录表
                     var goods_id = {{ goods.id }};
                     // alert(goods_id+':'+ parseInt(num_show.val()));
                     $.get('/cart/add/?goods_id='+goods_id+'&goods_count='+parseInt(num_show.val()), function (data) {
@@ -75,11 +75,13 @@
 
                 {% else %}
                     // 未登录
-                    alert('请先登录');
+                    // alert('请先登录');
+                    location.href = '/user/login';
                 {% endif %}
             })
-        }){% endcomment %}
+        })
     </script>
+
 {% endblock topfiles %}
 {% block main_content %}
 

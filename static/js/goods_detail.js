@@ -40,7 +40,7 @@ $(function () {
 
     $('#add_cart').click(function () {
         // 判断用户是否登录
-        {% if request.session.islogin %}
+        // {% if request.session.islogin %}
             var $add_x = $('#add_cart').offset().top;
             var $add_y = $('#add_cart').offset().left;
 
@@ -49,7 +49,7 @@ $(function () {
 
             $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'});
             // 已登录, 发送 ajax的get 请求保存到数据库, 参数:商品 id 和商品数目
-            var goods_id = {{ goods.id }};
+            // var goods_id = {{ goods.id }};
             // alert(goods_id+':'+ parseInt(num_show.val()));
             $.get('/cart/add/?goods_id='+goods_id+'&goods_count='+parseInt(num_show.val()), function (data) {
                 // {res: 结果} 1: 添加成功 0: 添加失败
@@ -70,9 +70,9 @@ $(function () {
                 }
             });
 
-        {% else %}
+        // {% else %}
             // 未登录
             alert('请先登录');
-        {% endif %}
+        // {% endif %}
     })
 })

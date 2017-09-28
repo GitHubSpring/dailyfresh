@@ -2,6 +2,7 @@ from django.db import models
 from db.base_model import BaseModel  # 导入模型类基类
 from utils.get_hash import get_hash  # 加密
 from db.base_manager import BaseManager  # 导入模型管理器类基类
+from df_goods.models import Goods
 
 
 class PassportManager(BaseManager):
@@ -37,7 +38,7 @@ class AddressManager(BaseManager):
 
     def get_one_address(self, passport_id):
         """获取账户默认收货地址"""
-        self.get_one_object(passport_id=passport_id, is_default=True)
+        return self.get_one_object(passport_id=passport_id, is_default=True)
 
     def add_one_address(self, recipient_name, recipient_addr, recipient_phone, zip_code, passport_id):
         """给账户添加收货地址"""
@@ -63,3 +64,43 @@ class Address(BaseModel):
 
     class Meta:
         db_table = 's_user_address'
+
+
+class BrowseHistoryManager(BaseManager):
+    """历史记录管理器类"""
+    def get_one_history(self, passport_id, goods_id):
+        """获取该商品浏览记录"""
+        return self.get_one_object(passport_id=passport_id, goods_id=goods_id)
+
+    def add_one_history(self, passport_id, goods_id):
+        """添加/更新浏览记录"""
+        obj = self.get_one_history(passport_id=passport_id, goods_id=goods_id)
+        if obj:
+            # 存在,修改 update_time
+            obj.save()
+        else:
+            # 不存在, 添加一条新的
+            self.add_one_object(passport_id=passport_id, goods_id=goods_id)
+        return True
+
+    def get_history_list(self, passport_id, limit=5):
+        """获取用户最近5条浏览记录"""
+        history_list = self.get_object_list(filters={'passport_id': passport_id}, order_by=('-update_time',))
+        # 取5条
+        history_list = history_list[:limit]
+        history_goods = []
+        for h in history_list:
+            g = Goods.objects.get_goods_by_id(goods_id=h.goods_id)
+            history_goods.append(g)
+        return history_goods
+
+
+class BrowseHistory(BaseModel):
+    """历史记录模型类"""
+    passport = models.ForeignKey('Passport', verbose_name='所属用户')
+    goods = models.ForeignKey('df_goods.Goods', verbose_name='浏览商品')
+
+    objects = BrowseHistoryManager()
+
+    class Meta:
+        db_table = 's_browse_history'

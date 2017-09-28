@@ -95,7 +95,6 @@
         $(function () {
             {% if request.session.islogin %}
                 $.get('/cart/count/', function (data) {
-                    alert(data.res);
                     $('#show_count').text(data.res)
                 });
             {% endif %}

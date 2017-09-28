@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.decorators.http import require_GET, require_http_methods
-from django.http import JsonResponse
+from django.views.decorators.http import require_GET
 from df_goods.models import Goods
+from df_user.models import BrowseHistory
 from df_goods.enums import *  # 导入枚举
 from django.core.paginator import Paginator  # 导入分页类
 
@@ -67,14 +67,10 @@ def goods_detail(request, gid):
     goods = Goods.objects_logic.get_goods_by_id(goods_id=gid)
     # 新品推荐
     goods_new = Goods.objects.get_goods_by_type(goods_type_id=goods.goods_type_id, limit=2, sort='new')
+    # 添加进浏览记录
+    BrowseHistory.objects.add_one_history(passport_id=request.session.get('passport_id'), goods_id=gid)
+
     return render(request, 'df_goods/detail.html', {'goods': goods, 'goods_new': goods_new})
-
-
-# /goods/stock/数字/
-@require_GET
-def goods_stock(request):
-    """商品库存"""
-    return JsonResponse({'res': '库存量'})
 
 
 # /list/种类/页码/?sort=排序方式
@@ -93,16 +89,16 @@ def goods_list(request, goods_type_id, pindex):
     nums_pages = paginator.num_pages  # 获取分页后的总页数
     if nums_pages < 5:
         # 不足5页,页码全显示
-        pages = range(1, nums_pages+1)
+        pages = range(1, nums_pages + 1)
     elif pindex <= 3:
         # 当前是前3页, 显示前5页
         pages = range(1, 6)
     elif nums_pages - pindex < 3:  # 6 7 8 9 10
         # 当前是后3页, 显示后5页
-        pages = range(nums_pages-4, nums_pages+1)
+        pages = range(nums_pages - 4, nums_pages + 1)
     else:
         # 其他情况, 显示当前页, 当前页的前两页和后两页
-        pages = range(pindex-2, pindex+3)
+        pages = range(pindex - 2, pindex + 3)
 
     # 查询新品推荐
     goods_new = Goods.objects.get_goods_by_type(goods_type_id=goods_type_id, limit=2, sort='new')

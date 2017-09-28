@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^$', views.user),  # 用户中心-用户信息页
     url(r'^order/$', views.order),  # 用户中心-订单页
     url(r'^address/$', views.address),  # 用户中心-地址页
+
 ]

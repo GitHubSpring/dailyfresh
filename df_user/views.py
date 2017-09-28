@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from df_user.models import Passport, Address
+from df_user.models import Passport, Address, BrowseHistory
 from django.http import JsonResponse
 
 from df_user.tasks import send_register_success_email  # 使用 celery 中的 task 任务函数
@@ -88,8 +88,11 @@ def logout(request):
 def user(request):
     """用户中心-用户信息页"""
     # 获取用户的默认收货信息
-    obj = Address.objects.get_one_address(request.session['passport_id'])
-    return render(request, 'df_user/user_center_info.html', {'page': 'info', 'address': obj})
+    address_obj = Address.objects.get_one_address(request.session['passport_id'])
+    # 获取用户最近浏览记录
+    history_obj = BrowseHistory.objects.get_history_list(passport_id=request.session['passport_id'])
+
+    return render(request, 'df_user/user_center_info.html', {'page': 'info', 'address': address_obj, 'history': history_obj})
 
 
 @login_require
@@ -98,14 +101,15 @@ def order(request):
     return render(request, 'df_user/user_center_order.html', {'page': 'order'})
 
 
-@require_http_methods(['POST', 'GET'])
+# @require_http_methods(['POST', 'GET'])
 @login_require
 def address(request):
     """用户中心-地址页"""
     if request.method == 'GET':
         # 查看是否有默认地址
-        obj = Address.objects.get_one_address(request.session['passport_id'])
-        return render(request, 'df_user/user_center_site.html', {'page': 'address', 'address': obj})
+        addr = Address.objects.get_one_address(request.session['passport_id'])
+        print(addr)
+        return render(request, 'df_user/user_center_site.html', {'page': 'address', 'address': addr})
 
     # post 添加收货地址
     recipient_name = request.POST.get('recipient_name')
