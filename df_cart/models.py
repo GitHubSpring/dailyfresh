@@ -4,6 +4,7 @@ from db.base_manager import BaseManager
 from df_goods.models import Goods
 from django.db.models import Sum
 
+
 class CartManager(BaseManager):
     """购物车模型管理器类"""
     def get_one_cart_info(self, passport_id, goods_id):
@@ -34,7 +35,7 @@ class CartManager(BaseManager):
             self.add_one_object(passport_id=passport_id, goods_id=goods_id, goods_count=goods_count)
             return True
 
-    def get_total_cart_info(self, passport_id):
+    def get_total_cart_count(self, passport_id):
         """获取商品总数"""
         total_goods = self.filter(passport_id=passport_id).aggregate(Sum('goods_count'))
         # {'goods_count__sum': None/3}
@@ -42,6 +43,11 @@ class CartManager(BaseManager):
         if total_count is None:
             total_count = 0
         return total_count
+
+    def get_total_cart_info(self, passport_id):
+        """获取全部商品记录"""
+        cart_info_list = self.get_object_list(filters={'passport_id': passport_id})
+        return cart_info_list
 
 
 class Cart(BaseModel):

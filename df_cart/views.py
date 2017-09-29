@@ -20,11 +20,12 @@ def cart_add(request):
 
 def cart_count(request):
     """获取购物车中商品总数"""
-    total_count = Cart.objects.get_total_cart_info(passport_id=request.session.get('passport_id'))
+    total_count = Cart.objects.get_total_cart_count(passport_id=request.session.get('passport_id'))
     return JsonResponse({'res': total_count})
 
 
 @login_require
 def cart_show(request):
     """购物车页"""
-    return render(request, 'df_cart/cart.html')
+    cart_info_list = Cart.objects.get_total_cart_info(passport_id=request.session['passport_id'])
+    return render(request, 'df_cart/cart.html', {'cart_info_list': cart_info_list})
