@@ -5,6 +5,10 @@
     <script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
     <script>
         $(function () {
+
+            get_total_count();
+            update_all_goods_info();
+
             // 更新页面商品总数
             function get_total_count() {
                 $.get('/cart/count/', function (data) {
@@ -13,7 +17,39 @@
                 });
             }
             // 计算商品的总数,总价,小计
+            function update_all_goods_info(){
+                var goods_total_price = 0;
+                var goods_total_count = 0;
+                // 遍历每条商品 ul
+                $('.cart_list_td').find(':checked').parents('ul').each(function () {
+                    var res_dict = update_goods_info($(this));  // 调用计算每条商品的小计和数目
+                    goods_total_count += res_dict['goods_count'];
+                    goods_total_price += res_dict['goods_price'];
 
+                });
+                $('.settlements').find('em').text(goods_total_price.toFixed(2));
+                $('.settlements').find('b').text(goods_total_count);
+            }
+            // 抽取 计算商品的小计和数目
+            function update_goods_info(goods_ul) {
+                var goods_price = parseFloat(goods_ul.children('.col05').text());
+                var goods_count = parseInt(goods_ul.find('.num_show').val());
+                var total_price = goods_price * goods_count;
+                $(this).children('.col07').text(total_price.toFixed(2)+'元');
+                return {'goods_count': goods_count, 'goods_price': goods_price}
+            }
+            // 点击全选/全不选
+            $('.settlements').find(':checkbox').click(function () {
+                var is_checked = $(this).prop('checked');
+{#                alert(is_checked);#}
+                // 1. 遍历所有的 checkbox, 设置其状态为 is_checked
+                $('.cart_list_td').find(':checkbox').each(function () {
+                    // $(this) 就是每个 ul 中的 checkbox
+                    $(this).prop({'checked': is_checked})
+                })
+                // 2. 修改总价和总数
+                update_all_goods_info();
+            })
 
 
         })

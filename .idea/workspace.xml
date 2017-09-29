@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7033def1-e67c-4ba3-a6e7-6eb6be524df2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/df_cart/models.py" afterPath="$PROJECT_DIR$/df_cart/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/df_cart/views.py" afterPath="$PROJECT_DIR$/df_cart/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/df_cart/cart.html" afterPath="$PROJECT_DIR$/templates/df_cart/cart.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,9 +62,13 @@
       <file leaf-file-name="cart.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/df_cart/cart.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="43" column="75" lean-forward="false" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
-              <folding />
+            <state relative-caret-position="391">
+              <caret line="23" column="63" lean-forward="false" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+              <folding>
+                <element signature="e#1326#1719#0#HTML" expanded="false" />
+                <element signature="e#1810#2249#0#HTML" expanded="false" />
+                <element signature="n#ul#0;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -978,9 +980,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/df_cart/cart.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="43" column="75" lean-forward="false" selection-start-line="43" selection-start-column="75" selection-end-line="43" selection-end-column="75" />
-          <folding />
+        <state relative-caret-position="391">
+          <caret line="23" column="63" lean-forward="false" selection-start-line="23" selection-start-column="63" selection-end-line="23" selection-end-column="63" />
+          <folding>
+            <element signature="e#1326#1719#0#HTML" expanded="false" />
+            <element signature="e#1810#2249#0#HTML" expanded="false" />
+            <element signature="n#ul#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
