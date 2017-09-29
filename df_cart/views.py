@@ -27,4 +27,4 @@ def cart_count(request):
 @login_require
 def cart_show(request):
     """购物车页"""
-    pass
+    return render(request, 'df_cart/cart.html')

@@ -108,7 +108,6 @@ def address(request):
     if request.method == 'GET':
         # 查看是否有默认地址
         addr = Address.objects.get_one_address(request.session['passport_id'])
-        print(addr)
         return render(request, 'df_user/user_center_site.html', {'page': 'address', 'address': addr})
 
     # post 添加收货地址

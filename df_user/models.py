@@ -88,11 +88,7 @@ class BrowseHistoryManager(BaseManager):
         history_list = self.get_object_list(filters={'passport_id': passport_id}, order_by=('-update_time',))
         # 取5条
         history_list = history_list[:limit]
-        history_goods = []
-        for h in history_list:
-            g = Goods.objects.get_goods_by_id(goods_id=h.goods_id)
-            history_goods.append(g)
-        return history_goods
+        return history_list
 
 
 class BrowseHistory(BaseModel):
