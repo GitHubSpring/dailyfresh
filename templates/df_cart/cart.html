@@ -27,8 +27,8 @@
                     goods_total_price += res_dict['goods_price'];
 
                 });
-                $('.settlements').find('em').text(goods_total_price.toFixed(2));
-                $('.settlements').find('b').text(goods_total_count);
+                $('ul.settlements').find('em').text(goods_total_price.toFixed(2));
+                $('ul.settlements').find('b').text(goods_total_count);
             }
             // 抽取 计算商品的小计和数目
             function update_goods_info(goods_ul) {
@@ -49,8 +49,66 @@
                 })
                 // 2. 修改总价和总数
                 update_all_goods_info();
-            })
+            });
+            // 单个商品的勾选
+            $('.cart_list_td').find(':checkbox').click(function () {
+                // 获取所有 checkbox 的数量和已勾选的 checkbox 数量进行比较,判断改变全选框状态
+                var all_len = $('.cart_list_td').find(':checkbox').length;
+                var checked_len = $('.cart_list_td').find(':checked').length;
+                if (all_len > checked_len){
+                    // 没有全选
+                    $('.settlements').find(':checkbox').prop({'checked': false});
+                }else{
+                    // 全选
+                    $('.settlements').find(':checkbox').prop({'checked': true});
+                }
+                update_all_goods_info()
+            });
 
+
+            // 修改后台购物车数据库表数据
+            var error_update = false;
+            function update_remote_cart_info(goods_id, goods_count) {
+                $.ajaxSettings.async = false;  // 设为同步
+                $.get('/cart/update/?goods_id='+goods_id+'&goods_count='+goods_count, function (data) {
+                    // {res:结果} 1: 更新成功, 0: 更新失败
+                    if (data.res == 1){
+                        error_update = true;
+                    }else {
+                        error_update = false;
+                    }
+                });
+                $.ajaxSettings.async = true;  // 设回异步
+            }
+            // 加
+            $('a.add').click(function () {
+                var goods_id = $(this).next().attr('goods_id');
+                var goods_count = parseInt($('.num_show').val())+1;
+                // 发送请求,添加进数据库
+                update_remote_cart_info(goods_id, goods_count);
+                if(error_update){
+                    // 加1成功,重置值
+                    $(this).next().val(goods_count);
+                    get_total_count();
+                    if($(this).parents('ul').find(':checkbox').prop(':checked')){
+                        // 选中的,更新全部
+                        update_all_goods_info();
+                    }else{
+                        // 未选中,更新商品小计
+                        update_goods_info($(this).parents('ul'));
+                    }
+                }
+            });
+            // 减
+            $('a.minus').click(function () {
+                var goods_id = $(this).prev().attr('goods_id');
+                var goods_count = parseInt($('.num_show').val())-1;
+                if (goods_count < 1){
+                    goods_count = 1;
+                }
+                // 发送更新请求
+                update_remote_cart_info(goods_id, goods_count);
+            })
 
         })
     </script>
@@ -71,13 +129,13 @@
 	    <ul class="cart_list_td clearfix">
 		<li class="col01"><input type="checkbox" name="" checked></li>
 		<li class="col02"><img src="{% static cart_info.goods.goods_image %}"></li>
-		<li class="col03">奇异果<br><em>{{ cart_info.goods.goods_price }}元/{{ cart_info.goods.goods_unite }}</em></li>
+		<li class="col03">{{ cart_info.goods.goods_name }}<br><em>{{ cart_info.goods.goods_price }}元/{{ cart_info.goods.goods_unite }}</em></li>
 		<li class="col04">{{ cart_info.goods.goods_unite }}</li>
 		<li class="col05">{{ cart_info.goods.goods_price }}元</li>
 		<li class="col06">
 			<div class="num_add">
 				<a href="javascript:;" class="add fl">+</a>
-				<input type="text" class="num_show fl" value="{{ cart_info.goods_count }}">
+				<input type="text" class="num_show fl" goods_id="{{ cart_info.goods.id }}" value="{{ cart_info.goods_count }}">
 				<a href="javascript:;" class="minus fl">-</a>	
 			</div>
 		</li>

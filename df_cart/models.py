@@ -49,6 +49,19 @@ class CartManager(BaseManager):
         cart_info_list = self.get_object_list(filters={'passport_id': passport_id})
         return cart_info_list
 
+    def update_one_cart_info(self, passport_id, goods_id, goods_count):
+        """更新商品数目"""
+        try:
+            cart_info = self.get_one_cart_info(passport_id=passport_id, goods_id=goods_id)
+            if goods_count <= cart_info.goods.goods_stock:
+                # 库存充足
+                cart_info.goods_count = goods_count
+                cart_info.save()
+                return True
+            return False
+        except:
+            return False
+
 
 class Cart(BaseModel):
     """购物车模型类"""
